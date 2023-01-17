@@ -26,18 +26,6 @@ variable "ENVIRONMENT" {
   default     = "prod"
 }
 
-variable "CLUSTER_USERNAME" {
-  default     = ""
-  type        = string
-  description = "Kubernetes cluster username"
-}
-
-variable "CLUSTER_PASSWORD" {
-  default     = ""
-  type        = string
-  description = "Kubernetes cluster password"
-}
-
 variable "NODE_COUNT" {
   description = "Number of Nodes in your K8s cluster"
   default     = 2

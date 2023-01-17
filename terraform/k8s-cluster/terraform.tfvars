@@ -1,2 +1,4 @@
 PROJECT_ID = "kryfitek"
 REGION = "us-east1"
+CLUSTER_USERNAME = "kryfitek"
+CLUSTER_PASSWORD = "KDQwI4uDUT"

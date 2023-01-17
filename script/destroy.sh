@@ -29,7 +29,7 @@ else
 fi
 
 grep -i "PROJECT_ID = " $TF_VAR_FILE
-if [ !$? -ne 1 ]; then
+if ![ $? -ne 1 ]; then
   echo "Please update the '$TF_VAR_FILE' file to contain your project credentials! Exiting..."
   exit 1
 else
@@ -47,7 +47,6 @@ echo "Destroying 'terraform/k8s-cluster'..."
 cd $REPO_DIR/terraform/k8s-cluster
 terraform init || exit 1
 terraform destroy -auto-approve || exit 1
-echo "terraform/k8s-cluster destroyed"
-echo ""
+echo -e "terraform/k8s-cluster destroyed\n"
 
 echo "Done!"
