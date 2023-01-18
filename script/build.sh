@@ -1,10 +1,11 @@
 #!/bin/bash
+set -e
 
 k8s_apply () {
   echo "Deploying 'terraform/k8s'..."
   terraform init || exit 1
   terraform apply -auto-approve || exit 1
-  echo "Terraform/k8s deployed"
+  echo -e "Terraform/k8s deployed\n"
 }
 
 k8s_success () {
@@ -16,7 +17,6 @@ k8s_success () {
 }
 
 # Global Directory Variables
-set -e
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )" # The directory of this script
 REPO_DIR="$(dirname "$SCRIPT_DIR")" # The root directory of this repository
 
@@ -56,11 +56,11 @@ else
 fi
 
 grep -i "PROJECT_ID = " $TF_VAR_FILE
-if ![ $? -ne 1 ]; then
+if ! [[ $? -ne 1 ]]; then
   echo "Please update the '$TF_VAR_FILE' file to contain your project credentials! Exiting..."
   exit 1
 else
-  echo "$TF_VAR_FILE does not contain project credentials"
+  echo "$TF_VAR_FILE contains project credentials"
 fi
 
 TF_VAR_FILE="terraform/k8s/terraform.tfvars"
@@ -72,11 +72,11 @@ else
 fi
 
 grep -i "PROJECT_ID = " $TF_VAR_FILE
-if ![ $? -ne 1 ]; then
+if ! [[ $? -ne 1 ]]; then
   echo "Please update the '$TF_VAR_FILE' file to contain your project credentials! Exiting..."
   exit 1
 else
-  echo "$TF_VAR_FILE does not contain non-default credentials"
+  echo "$TF_VAR_FILE contains project credentials"
 fi
 
 echo "Deploying 'terraform/k8s-cluster'..."
@@ -90,7 +90,7 @@ echo "Configuring kubectl environment..."
 K8S_CLUSTER_NAME=$(terraform output -raw kubernetes_cluster_name)
 K8S_CLUSTER_REGION=$(terraform output -raw region)
 gcloud container clusters get-credentials $K8S_CLUSTER_NAME --region $K8S_CLUSTER_REGION
-echo "kubectl configured"
+echo -e "kubectl configured\n"
 
 echo "Building K8s resources and applying their manifests on the cluster..."
 cd $REPO_DIR/terraform/k8s

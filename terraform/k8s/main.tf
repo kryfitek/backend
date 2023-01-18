@@ -1,7 +1,3 @@
-module "cert_manager" {
-  source = "./modules/cert-manager"
-}
-
 module "kong" {
   source = "./modules/kong"
 }

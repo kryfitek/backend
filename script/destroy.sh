@@ -29,11 +29,11 @@ else
 fi
 
 grep -i "PROJECT_ID = " $TF_VAR_FILE
-if ![ $? -ne 1 ]; then
+if ! [[ $? -ne 1 ]]; then
   echo "Please update the '$TF_VAR_FILE' file to contain your project credentials! Exiting..."
   exit 1
 else
-  echo "$TF_VAR_FILE does not contain project credentials"
+  echo "$TF_VAR_FILE contains project credentials"
 fi
 
 # echo "Destroying 'terraform/k8s'..."
