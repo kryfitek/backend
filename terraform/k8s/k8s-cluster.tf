@@ -1,18 +1,37 @@
+data "terraform_remote_state" "k8s_cluster" {
+  backend = "remote"
+
+  config = {
+    organization = "kryfitek"
+    workspaces = {
+      name = "backend"
+    }
+  }
+}
+data "google_client_config" "default" {
+}
+
+data "google_container_cluster" "cluster" {
+  name = data.terraform_remote_state.k8s_cluster.outputs.kubernetes_cluster_name
+  location = data.terraform_remote_state.k8s_cluster.outputs.region
+  project = data.terraform_remote_state.k8s_cluster.outputs.project_id
+}
+
 provider "kubernetes" {
   load_config_file = "false"
-  host = google_container_cluster.primary.endpoint
-  username = var.CLUSTER_USERNAME
-  password = var.CLUSTER_PASSWORD
-
-  client_certificate = google_container_cluster.primary.master_auth.0.client_certificate
-  client_key = google_container_cluster.primary.master_auth.0.client_key
-  cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
+  host = data.google_container_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(
+    data.google_container_cluster.cluster.master_auth.0.cluster_ca_certificate
+  )
+  token = data.google_client_config.default.access_token
 }
 
 provider "kubectl" {
-  host = google_container_cluster.primary.endpoint
-  cluster_ca_certificate = base64decode(google_container_cluster.primary.master_auth.0.cluster_ca_certificate)
-  token = google_container_cluster.primary.master_auth.0.password
+  host = data.google_container_cluster.cluster.endpoint
+  cluster_ca_certificate = base64decode(
+    data.google_container_cluster.cluster.master_auth.0.cluster_ca_certificate
+  )
+  token = data.google_client_config.default.access_token
   load_config_file = true
   apply_retry_count = 3
 }
