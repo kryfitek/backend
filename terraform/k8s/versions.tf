@@ -3,7 +3,7 @@ terraform {
     organization = "kryfitek"
 
     workspaces {
-      name = "backend"
+      name = "k8s-workloads"
     }
   }
 

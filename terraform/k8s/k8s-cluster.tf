@@ -4,7 +4,7 @@ data "terraform_remote_state" "k8s_cluster" {
   config = {
     organization = "kryfitek"
     workspaces = {
-      name = "backend"
+      name = "k8s-cluster"
     }
   }
 }
@@ -14,7 +14,7 @@ data "google_client_config" "default" {
 data "google_container_cluster" "cluster" {
   name = data.terraform_remote_state.k8s_cluster.outputs.kubernetes_cluster_name
   location = data.terraform_remote_state.k8s_cluster.outputs.region
-  project = data.terraform_remote_state.k8s_cluster.outputs.project_id
+  project = data.terraform_remote_state.k8s_cluster.outputs.project
 }
 
 provider "kubernetes" {

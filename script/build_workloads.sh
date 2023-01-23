@@ -31,36 +31,12 @@ else
   echo "google cloud CLI is installed"
 fi
 
-# which tfenv > /dev/null
-# if [ $? -ne 0 ]; then
-#   echo "Please install tfenv to continue! Exiting..."
-#   exit 1
-# else
-#   echo "tfenv is installed"
-# fi
-
 which kubectl > /dev/null
 if [ $? -ne 0 ]; then
   echo "Please install kubectl to continue! Exiting..."
   exit 1
 else
   echo "kubectl is installed"
-fi
-
-TF_VAR_FILE="terraform/k8s-cluster/terraform.tfvars"
-if [ -f "$TF_VAR_FILE" ]; then
-    echo "$TF_VAR_FILE exists"
-else 
-    echo "$TF_VAR_FILE does not exist! Please create it. Exiting..."
-    exit 1
-fi
-
-grep -i "PROJECT_ID = " $TF_VAR_FILE
-if ! [[ $? -ne 1 ]]; then
-  echo "Please update the '$TF_VAR_FILE' file to contain your project credentials! Exiting..."
-  exit 1
-else
-  echo "$TF_VAR_FILE contains project credentials"
 fi
 
 TF_VAR_FILE="terraform/k8s/terraform.tfvars"
@@ -78,19 +54,6 @@ if ! [[ $? -ne 1 ]]; then
 else
   echo "$TF_VAR_FILE contains project credentials"
 fi
-
-echo "Deploying 'terraform/k8s-cluster'..."
-set -e # Prevent any kind of script failures
-cd terraform/k8s-cluster
-terraform init || exit 1
-terraform apply -auto-approve || exit 1
-echo -e "terraform/k8s-cluster deployed\n"
-
-echo "Configuring kubectl environment..."
-K8S_CLUSTER_NAME=$(terraform output -raw kubernetes_cluster_name)
-K8S_CLUSTER_REGION=$(terraform output -raw region)
-gcloud container clusters get-credentials $K8S_CLUSTER_NAME --region $K8S_CLUSTER_REGION
-echo -e "kubectl configured\n"
 
 echo "Building K8s resources and applying their manifests on the cluster..."
 cd $REPO_DIR/terraform/k8s
