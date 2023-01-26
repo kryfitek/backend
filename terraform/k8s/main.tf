@@ -4,6 +4,7 @@ module "kong" {
 
 module "monitoring" {
   source = "./modules/monitoring"
+  kube-version = "36.2.0"
 }
 
 # module "frontend" {

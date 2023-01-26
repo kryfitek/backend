@@ -8,6 +8,7 @@ data "terraform_remote_state" "k8s_cluster" {
     }
   }
 }
+
 data "google_client_config" "default" {
 }
 
@@ -18,20 +19,19 @@ data "google_container_cluster" "cluster" {
 }
 
 provider "kubernetes" {
-  load_config_file = "false"
-  host = data.google_container_cluster.cluster.endpoint
+  host = "https://${data.google_container_cluster.cluster.endpoint}"
   cluster_ca_certificate = base64decode(
     data.google_container_cluster.cluster.master_auth.0.cluster_ca_certificate
   )
   token = data.google_client_config.default.access_token
 }
 
-provider "kubectl" {
-  host = data.google_container_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(
-    data.google_container_cluster.cluster.master_auth.0.cluster_ca_certificate
-  )
-  token = data.google_client_config.default.access_token
-  load_config_file = true
-  apply_retry_count = 3
+provider "helm" {
+  kubernetes {
+    host = "https://${data.google_container_cluster.cluster.endpoint}"
+    cluster_ca_certificate = base64decode(
+      data.google_container_cluster.cluster.master_auth.0.cluster_ca_certificate
+    )
+    token = data.google_client_config.default.access_token
+  }
 }

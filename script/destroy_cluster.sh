@@ -11,15 +11,6 @@ else
   exit 1
 fi
 
-# which tfenv > /dev/null
-
-# if [ $? -ne 0 ]; then
-#   echo "Please install tfenv to continue! Exiting..."
-#   exit 1
-# else
-#   echo "tfenv is installed"
-# fi
-
 TF_VAR_FILE="terraform/k8s-cluster/terraform.tfvars"
 if [ -f "$TF_VAR_FILE" ]; then
     echo "$TF_VAR_FILE exists"
@@ -35,13 +26,6 @@ if ! [[ $? -ne 1 ]]; then
 else
   echo "$TF_VAR_FILE contains project credentials"
 fi
-
-# echo "Destroying 'terraform/k8s'..."
-# cd $REPO_DIR/terraform/k8s
-# terraform init || exit 1
-# terraform destroy -auto-approve || exit 1
-# echo "terraform/k8s destroyed"
-# echo ""
 
 echo "Destroying 'terraform/k8s-cluster'..."
 cd $REPO_DIR/terraform/k8s-cluster
