@@ -28,12 +28,32 @@ variable "ENVIRONMENT" {
 
 variable "FRONTEND_IMAGE_TAG" {
   description = "The image tag to use for frontend deployments"
-  default     = "test"
+  default     = "ui"
   type        = string
 }
 
 variable "BACKEND_IMAGE_TAG" {
   description = "The image tag to use for backend deployments"
-  default     = "test"
+  default     = "services"
+  type        = string
+}
+
+variable "REGISTRY_USERNAME" {
+  description = "The username to use for docker hub authentication"
+  type        = string
+}
+
+variable "REGISTRY_PASSWORD" {
+  description = "The password to use for docker hub authentication"
+  type        = string
+}
+
+variable "REGISTRY_EMAIL" {
+  description = "The email to use for docker hub authentication"
+  type        = string
+}
+
+variable "REGISTRY_SERVER" {
+  description = "The server to use for docker hub authentication"
   type        = string
 }

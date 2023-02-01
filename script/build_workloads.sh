@@ -1,8 +1,13 @@
 #!/bin/bash
 set -e
 
+push_images () {
+  echo "Building and pushing to Docker Hub..."
+  $REPO_DIR/script/build_docker_images.sh
+}
+
 k8s_apply () {
-  echo "Deploying 'terraform/k8s'..."
+  echo -e "\nDeploying 'terraform/k8s'..."
   terraform init || exit 1
   terraform apply -auto-approve || exit 1
   echo -e "Terraform/k8s deployed\n"
@@ -58,6 +63,19 @@ fi
 echo "Building K8s resources and applying their manifests on the cluster..."
 cd $REPO_DIR/terraform/k8s
 set +e
+while true
+do
+  push_images
+  if [ $? -ne 0 ]; then
+    echo "Failed to push to Docker Hub. Trying again... 
+    Hint: press 'ctrl+c' to abort the retry loop"
+    sleep 5
+  else
+    echo "Successfully pushed image to Docker Hub"
+    break
+  fi
+done
+
 while true
 do
   k8s_apply

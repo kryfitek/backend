@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: backend
-          image: backend:latest
-          imagePullPolicy: Never # since we are using a local image in minikube
+          image: kryfitek/backend:latest
+          imagePullPolicy: Always
           resources:
             limits:
               cpu: "0.5"
@@ -28,6 +28,5 @@ spec:
               memory: "50Mi"
           ports:
             - containerPort: 5000
-          env:
-            - name: ENVIRONMENT_CONTEXT
-              value: "kube"
+      imagePullSecrets:
+      - name: docker-cfg

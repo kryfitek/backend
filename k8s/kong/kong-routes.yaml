@@ -1,3 +1,61 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monitoring
+  namespace: monitoring
+  annotations:
+    konghq.com/strip-path: "true"
+    # kubernetes.io/tls-acme: "true" # Uncomment to enable TLS
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod" # Uncomment to enable TLS
+    # konghq.com/plugins: ip-allowlist # Comment to disable IP allowlist plugin
+spec:
+  # tls: # Uncomment to enable TLS
+  #   - secretName: "letsencrypt-prod-issuer-account-key" # Uncomment to enable TLS
+  #     hosts: # Uncomment to enable TLS
+  #       - "<grafana.example.com>" # Uncomment to enable TLS
+
+  ingressClassName: "kong"
+  rules:
+    - host: kryfitek.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /grafana
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend
+  namespace: backend
+  annotations:
+    konghq.com/strip-path: "true"
+    # kubernetes.io/tls-acme: "true" # Uncomment to enable TLS
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod" # Uncomment to enable TLS
+    # konghq.com/plugins: ip-allowlist # Uncomment to enable IP allowlist plugin
+spec:
+  # tls: # Uncomment to enable TLS
+  #   - secretName: "letsencrypt-prod-issuer-account-key" # Uncomment to enable TLS
+  #     hosts: # Uncomment to enable TLS
+  #       - "<www.example.com>" # Uncomment to enable TLS
+
+  ingressClassName: "kong"
+  rules:
+    - host: kryfitek.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /api
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 5000
+# ---
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
 # metadata:
@@ -16,7 +74,7 @@
 
 #   ingressClassName: "kong"
 #   rules:
-#     # - host: <www.example.com> # Uncomment to enable hostname (needed if you enable the external Grafana section below) and indent your YAML
+#     # - host: krifitek.com
 #       - http:
 #           paths:
 #             - pathType: Prefix
@@ -25,33 +83,4 @@
 #                 service:
 #                   name: frontend
 #                   port:
-#                     number: 8080
----
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: monitoring
-#   namespace: monitoring
-#   annotations:
-#     konghq.com/strip-path: "true"
-#     # kubernetes.io/tls-acme: "true" # Uncomment to enable TLS
-#     # cert-manager.io/cluster-issuer: "letsencrypt-prod" # Uncomment to enable TLS
-#     konghq.com/plugins: ip-allowlist # Comment to disable IP allowlist plugin
-# spec:
-#   # tls: # Uncomment to enable TLS
-#   #   - secretName: "letsencrypt-prod-issuer-account-key" # Uncomment to enable TLS
-#   #     hosts: # Uncomment to enable TLS
-#   #       - "<grafana.example.com>" # Uncomment to enable TLS
-
-#   ingressClassName: "kong"
-#   rules:
-#     - host: <grafana.example.com>
-#       http:
-#         paths:
-#           - pathType: Prefix
-#             path: /
-#             backend:
-#               service:
-#                 name: grafana
-#                 port:
-#                   number: 80
+#                     number: 80
