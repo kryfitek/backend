@@ -1,6 +1,7 @@
 resource "kubernetes_secret" "docker" {
   metadata {
-    name = "docker-cfg"
+    name = "dockerhub"
+    namespace = "backend"
   }
   type = "kubernetes.io/dockerconfigjson"
   data = {

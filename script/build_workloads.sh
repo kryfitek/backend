@@ -17,7 +17,6 @@ k8s_success () {
   PROXY_IP=$(kubectl get -o jsonpath="{.status.loadBalancer.ingress[0].ip}" service -n kong kong-proxy)
   echo -e "All manifests applied successfully\n"
   echo -e "Kong LoadBalancer IP: http://$PROXY_IP"
-  echo -e "Run 'script/grafana' to connect to the Kong metrics dashboard"
   echo -e "Done!"
 }
 
