@@ -1,17 +1,24 @@
 # backend
 Backend for kryfitek platform
 
+## APIs
+APIs are available at:
+
+http://api.kryfitek.com
+
 ## Prometheus
 kubectl port-forward svc/kube-prometheus-stackr-prometheus 9090:9090 --namespace monitoring
 
-`http://localhost:9090/`
+http://localhost:9090
 
 ## Grafana
-kubectl port-forward svc/kube-prometheus-stackr-grafana 3000:80 --namespace monitoring
+Available through Kong at:
 
-`http://localhost:3000/`
+http://grafana.kryfitek.com
+
+Also available at:
 
 ## Alertmanager
 kubectl port-forward svc/kube-prometheus-stackr-alertmanager 9093:9093 --namespace monitoring
 
-`http://localhost:9093/`
+http://localhost:9093
