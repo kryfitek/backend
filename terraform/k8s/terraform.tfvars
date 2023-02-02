@@ -1,0 +1,8 @@
+PROJECT_ID = "kryfitek"
+REGION = "us-east1"
+CLUSTER_USERNAME = "kryfitek"
+CLUSTER_PASSWORD = "KDQwI4uDUT"
+REGISTRY_SERVER = "docker.io"
+REGISTRY_USERNAME = "kryfitek"
+REGISTRY_EMAIL = "kryfitek@gmail.com"
+REGISTRY_PASSWORD = "dckr_pat_Ubcca3CAFMWCxDKrg8bIzRt8ISc"
