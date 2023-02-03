@@ -35,6 +35,10 @@ module "monitoring" {
 
 module "backend" {
   source = "./modules/containers/backend"
-  IMAGE_TAG   = var.BACKEND_IMAGE_TAG
+}
+
+module "health" {
+  source = "./modules/containers/backend/health"
+  # IMAGE_TAG   = var.HEALTH_IMAGE_TAG
   ENVIRONMENT = var.ENVIRONMENT
 }

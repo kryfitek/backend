@@ -26,18 +26,6 @@ variable "ENVIRONMENT" {
   default     = "prod"
 }
 
-variable "FRONTEND_IMAGE_TAG" {
-  description = "The image tag to use for frontend deployments"
-  default     = "ui"
-  type        = string
-}
-
-variable "BACKEND_IMAGE_TAG" {
-  description = "The image tag to use for backend deployments"
-  default     = "services"
-  type        = string
-}
-
 variable "REGISTRY_USERNAME" {
   description = "The username to use for docker hub authentication"
   type        = string
@@ -57,3 +45,15 @@ variable "REGISTRY_SERVER" {
   description = "The server to use for docker hub authentication"
   type        = string
 }
+
+# variable "FRONTEND_IMAGE_TAG" {
+#   description = "The image tag to use for frontend deployments"
+#   default     = "ui"
+#   type        = string
+# }
+
+# variable "HEALTH_IMAGE_TAG" {
+#   description = "The image tag to use for health service deployment"
+#   default     = "services"
+#   type        = string
+# }

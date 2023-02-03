@@ -49,10 +49,10 @@ spec:
       http:
         paths:
           - pathType: Prefix
-            path: /
+            path: /health
             backend:
               service:
-                name: backend
+                name: health
                 port:
                   number: 5000
 # ---
