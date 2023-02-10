@@ -16,15 +16,18 @@ resource "kubernetes_secret" "docker" {
       }
     })
   }
-}
-
-module "kong" {
-  source = "./modules/kong"
+  depends_on = [
+    module.backend
+  ]
 }
 
 module "monitoring" {
   source = "./modules/monitoring"
   kube-version = "36.2.0"
+}
+
+module "nginx" {
+  source = "./modules/nginx"
 }
 
 # module "frontend" {
@@ -39,6 +42,5 @@ module "backend" {
 
 module "health" {
   source = "./modules/containers/backend/health"
-  # IMAGE_TAG   = var.HEALTH_IMAGE_TAG
   ENVIRONMENT = var.ENVIRONMENT
 }

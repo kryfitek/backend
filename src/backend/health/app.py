@@ -3,15 +3,15 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET"])
+@app.route("/health", methods=["GET"])
 def root():
     return "main route success"
 
-@app.route("/cache-me", methods=["GET"])
+@app.route("/health/cache-me", methods=["GET"])
 def cache():
-    return "kong will cache this response"
+    return "proxy will cache this response"
 
-@app.route("/info", methods=["POST"])
+@app.route("/health/info", methods=["POST"])
 def info():
     resp = {
         "host": request.headers["Host"],
@@ -23,6 +23,6 @@ def info():
     }
     return jsonify(resp)
 
-@app.route("/health-check", methods=["GET"])
+@app.route("/health/health-check", methods=["GET"])
 def healthcheck():
     return "success"
