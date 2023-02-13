@@ -4,7 +4,9 @@ metadata:
   name: grafana
   namespace: monitoring
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: nginx
   rules:
@@ -18,6 +20,10 @@ spec:
                 name: kube-prometheus-stackr-grafana
                 port:
                   number: 80
+  tls:
+    - hosts:
+        - "grafana.kryfitek.com"
+      secretName: "grafana-kryfitek-com"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

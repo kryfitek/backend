@@ -28,6 +28,31 @@ module "monitoring" {
 
 module "nginx" {
   source = "./modules/nginx"
+  depends_on = [
+    module.monitoring
+  ]
+}
+
+module "cert-manager" {
+  source = "./modules/cert-manager"
+  depends_on = [
+    module.nginx
+  ]
+}
+
+module "backend" {
+  source = "./modules/containers/backend"
+  depends_on = [
+    module.nginx
+  ]
+}
+
+module "health" {
+  source = "./modules/containers/backend/health"
+  ENVIRONMENT = var.ENVIRONMENT
+  depends_on = [
+    module.backend
+  ]
 }
 
 # module "frontend" {
@@ -35,12 +60,3 @@ module "nginx" {
 #   IMAGE_TAG   = var.FRONTEND_IMAGE_TAG
 #   ENVIRONMENT = var.ENVIRONMENT
 # }
-
-module "backend" {
-  source = "./modules/containers/backend"
-}
-
-module "health" {
-  source = "./modules/containers/backend/health"
-  ENVIRONMENT = var.ENVIRONMENT
-}

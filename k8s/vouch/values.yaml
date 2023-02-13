@@ -1,0 +1,19 @@
+config:
+  oauth:
+    auth_url: https://myoidcprovider/oauth2/v1/authorize
+    callback_url: "https://myvouchingressdomain.com/auth"
+    client_id: ""
+    client_secret: ""
+    provider: oidc
+    scopes:
+    - openid
+    - email
+    - profile
+    token_url: https://myoidcprovider/oauth2/v1/token
+    user_info_url: https://myoidcprovider/oauth2/v1/userinfo
+ingress:
+  enabled: true
+  hosts:
+  - "myvouchingressdomain.com"
+  paths:
+  - /
