@@ -22,8 +22,8 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - "grafana.kryfitek.com"
-      secretName: "grafana-kryfitek-com"
+        - grafana.kryfitek.com
+      secretName: grafana-kryfitek-com
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

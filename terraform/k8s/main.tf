@@ -35,16 +35,10 @@ module "nginx" {
 
 module "cert-manager" {
   source = "./modules/cert-manager"
-  depends_on = [
-    module.nginx
-  ]
 }
 
 module "backend" {
   source = "./modules/containers/backend"
-  depends_on = [
-    module.nginx
-  ]
 }
 
 module "health" {
