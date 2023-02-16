@@ -1,19 +1,24 @@
 config:
   oauth:
-    auth_url: https://myoidcprovider/oauth2/v1/authorize
-    callback_url: "https://myvouchingressdomain.com/auth"
-    client_id: ""
-    client_secret: ""
+    auth_url: https://dev-q4qlopr75a0n0hyv.us.auth0.com/oauth/authorize
+    callback_url: "https://vouch.kryfitek.com/auth"
+    client_id: "S8BYQFiQ0CHD2mgsLZjCN5hTIhDiJUJC"
+    client_secret: "maUh0Zy6YEf-d9JyO9ZqRxOq02gQf3e2TCcDfsQIbEM8Zvg3DVuRWaNd8ZGeeRHa"
     provider: oidc
     scopes:
     - openid
     - email
     - profile
-    token_url: https://myoidcprovider/oauth2/v1/token
-    user_info_url: https://myoidcprovider/oauth2/v1/userinfo
+    token_url: https://dev-q4qlopr75a0n0hyv.us.auth0.com/oauth/token
+    user_info_url: https://dev-q4qlopr75a0n0hyv.us.auth0.com/oauth/userinfo
+  vouch:
+    headers:
+      claims:
+      - customClaim1
+      - customClaim2
 ingress:
   enabled: true
   hosts:
-  - "myvouchingressdomain.com"
+  - "vouch.kryfitek.com"
   paths:
   - /
